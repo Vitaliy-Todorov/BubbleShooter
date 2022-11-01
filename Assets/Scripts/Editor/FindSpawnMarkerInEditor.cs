@@ -1,0 +1,33 @@
+using System.Linq;
+using Data;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+namespace Editor
+{
+    [CustomEditor(typeof(LevelData))]
+    public class FindSpawnMarkerInEditor : UnityEditor.Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            LevelData levelData = (LevelData) target;
+
+            if (GUILayout.Button("Collect"))
+            {
+                levelData.NameScene = SceneManager.GetActiveScene().name;
+                
+                levelData.Gun = 
+                    FindObjectOfType<GunSpawnMarker>()
+                    .transform.position;
+                
+                levelData.StationaryBalls = 
+                    FindObjectsOfType<StationaryBallSpawnMarker>()
+                        .Select(spawnMarker => new BallSpawnerData(spawnMarker.Color, spawnMarker.transform.position))
+                        .ToList();
+            }
+        }
+    }
+}

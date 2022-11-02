@@ -1,5 +1,7 @@
 using Assets.Scripts.Data;
 using Assets.Scripts.Infrastructure.Services;
+using Component;
+using Component.BallsGrid;
 using Data;
 using Infrastructure.Services;
 using UnityEngine;
@@ -70,9 +72,10 @@ namespace Assets.Scripts.Infrastructure.States
         {
             string nameScene = SceneManager.GetActiveScene().name;
             LevelData levelData = _staticDataService.GetLevelData(nameScene);
-            
-            _gameFactoryService.CreateGun(levelData.Gun);
-            _gameFactoryService.CreateBallsGrid(nameScene, levelData.StationaryBalls);
+
+            BallsGridMove ballsGridMove = _gameFactoryService.CreateBallsGrid(levelData.StationaryBalls, levelData.TopOfGrid, levelData.BottomOfGrid)
+                .GetComponent<BallsGridMove>();
+            _gameFactoryService.CreateGun(levelData.Gun, ballsGridMove);
         }
     }
 }

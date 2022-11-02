@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Infrastructure.System.InputSystem;
+using Component.BallsGrid;
 using UnityEngine;
 
 namespace Component
@@ -20,11 +21,13 @@ namespace Component
         private GeneralDataService _generalDataService;
         private IInputSystem _inputSystem;
         private List<Color> _colorsOfBalls;
+        private BallsGridMove _ballsGridMove;
 
-        public void Construct(GeneralDataService generalDataService, IInputSystem inputSystem)
+        public void Construct(GeneralDataService generalDataService, IInputSystem inputSystem, BallsGridMove ballsGridMove)
         {
             _inputSystem = inputSystem;
             _generalDataService = generalDataService;
+            _ballsGridMove = ballsGridMove;
 
             _colorsOfBalls = _generalDataService.GeneralData.ColorsOfBalls;
             
@@ -40,7 +43,10 @@ namespace Component
 
         private void Shoot(Transform gun, float speedBall, GameObject ballGOBasic)
         {
+            _ballsGridMove?.MoveOneStep();
+            
             GameObject ballGO = CreateBall(gun, ballGOBasic);
+            ballGO.transform.SetParent(_ballsGridMove.transform);
             
             PaintBallAndGun(ballGO);
             BallMove(speedBall, ballGO);

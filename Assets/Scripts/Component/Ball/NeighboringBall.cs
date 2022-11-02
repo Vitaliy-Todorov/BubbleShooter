@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Component.BallsGrid;
 using UnityEngine;
 
 namespace Component
@@ -27,8 +28,10 @@ namespace Component
         {
             foreach (GameObject neighboringBall in _neighboringBalls)
             {
-                if(neighboringBall != null)
+                if (neighboringBall != null)
+                {
                     Destroy(neighboringBall);
+                }
             }
         }
     }

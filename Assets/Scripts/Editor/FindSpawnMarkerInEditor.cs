@@ -27,6 +27,23 @@ namespace Editor
                     FindObjectsOfType<StationaryBallSpawnMarker>()
                         .Select(spawnMarker => new BallSpawnerData(spawnMarker.Color, spawnMarker.transform.position))
                         .ToList();
+
+                FindTopAndBottomOfGrid(levelData);
+            }
+        }
+
+        private static void FindTopAndBottomOfGrid(LevelData levelData)
+        {
+            levelData.TopOfGrid = levelData.StationaryBalls[0].Position.y;
+            levelData.BottomOfGrid = levelData.StationaryBalls[0].Position.y;
+
+            foreach (BallSpawnerData ballSpawnerData in levelData.StationaryBalls)
+            {
+                if (levelData.TopOfGrid < ballSpawnerData.Position.y)
+                    levelData.TopOfGrid = ballSpawnerData.Position.y;
+                
+                if (levelData.BottomOfGrid > ballSpawnerData.Position.y)
+                    levelData.BottomOfGrid = ballSpawnerData.Position.y;
             }
         }
     }

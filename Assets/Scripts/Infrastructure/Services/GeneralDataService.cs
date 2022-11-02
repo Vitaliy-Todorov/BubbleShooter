@@ -2,6 +2,7 @@
 using Assets.Scripts.Data;
 using Data;
 using Infrastructure.Services;
+using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure.Services
 {
@@ -16,6 +17,14 @@ namespace Assets.Scripts.Infrastructure.Services
             PlayerProgressData = new PlayerProgressData();
             
             GeneralData = new GeneralData(staticDataService);
+            FindEdgesOfScreen();
+        }
+
+        private void FindEdgesOfScreen()
+        {
+            Camera camera = Camera.main;
+            GeneralData.lowerLeftCorner = camera.ViewportToWorldPoint(new Vector2(0, 0));
+            GeneralData.upperRightCorner = camera.ViewportToWorldPoint(new Vector2(1, 1));
         }
     }
 }

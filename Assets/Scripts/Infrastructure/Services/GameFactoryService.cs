@@ -29,8 +29,8 @@ namespace Assets.Scripts.Infrastructure.Services
 
         public ShootingBalls CreateGun(Vector2 position, BallsGridMove ballsGridMove)
         {
-            GameObject asset = _assetProvider.Initializebl(AssetAddressAndNames.Gun);
-            GameObject gunGO = Object.Instantiate(asset, position, Quaternion.identity);
+            GameObject assetGun = _assetProvider.Initializebl(AssetAddressAndNames.Gun);
+            GameObject gunGO = Object.Instantiate(assetGun, position, Quaternion.identity);
             
             ShootingBalls gun = gunGO.GetComponentInChildren<ShootingBalls>();
             gun.Construct(_generalDataService, _inputSystem, ballsGridMove);
@@ -41,6 +41,45 @@ namespace Assets.Scripts.Infrastructure.Services
             return gun;
         }
 
+        #region FrameFromWalls
+        
+        public void CreateFrameFromWalls(Vector2 lowerLeftCorner, Vector2 upperRightCorner)
+        {
+            GameObject assetWall = _assetProvider.Initializebl(AssetAddressAndNames.Wall);
+            Vector2 sizeOfFrame = upperRightCorner - lowerLeftCorner;
+
+            CreateWall(assetWall, 
+                new Vector2(0, lowerLeftCorner.y), 
+                new Vector2(sizeOfFrame.x, 1));
+            CreateWall(assetWall, 
+                new Vector2(lowerLeftCorner.x, 0), 
+                new Vector2(1, sizeOfFrame.y));
+            CreateWall(assetWall, 
+                new Vector2(upperRightCorner.x, 0), 
+                new Vector2(1, sizeOfFrame.y));
+
+            GameObject wallForSpawnTheBallsGridPattern = CreateWall(assetWall, 
+                new Vector2(0, upperRightCorner.y), 
+                new Vector2(sizeOfFrame.x, 1));
+
+            wallForSpawnTheBallsGridPattern
+                .AddComponent<SpawnTheBallsGridPattern>()
+                .Construct();
+        }
+
+        private GameObject CreateWall(GameObject assetWall, Vector2 position, Vector2 sizeOfFrame)
+        {
+            Vector3 scal = (Vector3) sizeOfFrame + new Vector3(0,0,1);
+            GameObject wallGO = Object.Instantiate(assetWall, position, Quaternion.identity);
+            wallGO.transform.localScale = scal;
+
+            return wallGO;
+        }
+
+        #endregion
+
+        #region BallsGrid
+        
         public GameObject CreateBallsGrid(List<BallSpawnerData> ballsSpawnerData, float topOfGrid, float bottomOfGrid)
         {
             GameObject assetBallsGrid = _assetProvider.Initializebl(AssetAddressAndNames.BallsGrid);
@@ -91,5 +130,7 @@ namespace Assets.Scripts.Infrastructure.Services
 
             return stationaryBallGO;
         }
+        
+        #endregion
     }
 }

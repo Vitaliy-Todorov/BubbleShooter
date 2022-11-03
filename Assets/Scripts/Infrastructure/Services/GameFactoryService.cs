@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using Assets.Scripts.Data;
+using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Infrastructure.Services.AssetManagement;
 using Assets.Scripts.Infrastructure.System.InputSystem;
 using Component;
 using Component.BallsGrid;
 using Data;
 using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
-namespace Assets.Scripts.Infrastructure.Services
+namespace Infrastructure.Services
 {
     public class GameFactoryService : IService
     {
@@ -63,8 +63,12 @@ namespace Assets.Scripts.Infrastructure.Services
                 new Vector2(sizeOfFrame.x, 1));
 
             wallForSpawnTheBallsGridPattern
+                .GetComponent<BoxCollider2D>()
+                .isTrigger = true;
+            
+            wallForSpawnTheBallsGridPattern
                 .AddComponent<SpawnTheBallsGridPattern>()
-                .Construct();
+                .Construct(this);
         }
 
         private GameObject CreateWall(GameObject assetWall, Vector2 position, Vector2 sizeOfFrame)
@@ -93,17 +97,24 @@ namespace Assets.Scripts.Infrastructure.Services
             Vector2 startPositionGridBalls = new Vector2(0, (topOfGrid + bottomOfGrid) / 2);
             GameObject assetBallsGridPattern = CreateBallsGridPattern(ballsSpawnerData, ballsGridMove, startPositionGridBalls, gridHeight);
             #endregion
-            
-            assetBallsGridPattern.transform.SetParent(baallsGridGO.transform);
 
             return baallsGridGO;
         }
+
+        public GameObject CreateBallsGridPattern(BallsGridPattern ballsGridPattern) =>
+            CreateBallsGridPattern(ballsGridPattern.BallsSpawnerData,
+                ballsGridPattern.BallsGridMove,
+                ballsGridPattern.StartPositionGridBalls,
+                ballsGridPattern.GridHeight);
 
         private GameObject CreateBallsGridPattern(List<BallSpawnerData> ballsSpawnerData, BallsGridMove ballsGridMove, Vector2 startPositionGridBalls, float gridHeight)
         {
             GameObject assetBallsGridPattern = _assetProvider.Initializebl(AssetAddressAndNames.BallsGridPattern);
             
-            GameObject baallsGridPatternGO = Object.Instantiate(assetBallsGridPattern, startPositionGridBalls, Quaternion.identity);
+            GameObject baallsGridPatternGO = Object.Instantiate(assetBallsGridPattern, startPositionGridBalls, Quaternion.identity, ballsGridMove.transform);
+            baallsGridPatternGO.GetComponent<BallsGridPattern>()
+                .Construct(ballsSpawnerData, ballsGridMove, startPositionGridBalls, gridHeight);
+            
             baallsGridPatternGO.transform.localScale = new Vector3(1, gridHeight, 1);
 
             FillBallsGridPattern(ballsSpawnerData, ballsGridMove, ref baallsGridPatternGO);

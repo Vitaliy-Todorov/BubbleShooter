@@ -21,9 +21,7 @@ namespace Infrastructure.Services
                 .LoadAll<LevelData>(LevelDataPath)
                 .ToDictionary(levelData => levelData.NameScene, levelData => levelData);
 
-            StaticGeneralData =
-                Resources
-                    .Load<StaticGeneralData>(StaticGeneralDataPath);
+            StaticGeneralData = Resources.Load<StaticGeneralData>(StaticGeneralDataPath);
         }
 
         public LevelData GetLevelData(string nameScene) => 

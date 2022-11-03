@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7737611415274709624}
   - component: {fileID: 6842856003211773796}
+  - component: {fileID: 1098493000074120887}
   m_Layer: 0
   m_Name: BallsGridPattern
   m_TagString: Untagged
@@ -58,3 +59,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1098493000074120887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5780712197821979062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b56fd253d81e401c901496afc747d243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

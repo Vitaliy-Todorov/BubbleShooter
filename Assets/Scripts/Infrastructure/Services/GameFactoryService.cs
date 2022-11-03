@@ -14,14 +14,17 @@ namespace Infrastructure.Services
     {
         private AssetProvider _assetProvider;
         private GeneralDataService _generalDataService;
+        private UIFactoryService _uiFactoryService;
         private IInputSystem _inputSystem;
-        
+
         private float _diameterOfBall = 1;
 
         public GameFactoryService(AssetProvider assetProvider,
             GeneralDataService generalDataService,
+            UIFactoryService uiFactoryService,
             IInputSystem inputSystem)
         {
+            _uiFactoryService = uiFactoryService;
             _assetProvider = assetProvider;
             _generalDataService = generalDataService;
             _inputSystem = inputSystem;
@@ -43,7 +46,7 @@ namespace Infrastructure.Services
 
         #region FrameFromWalls
         
-        public void CreateFrameFromWalls(Vector2 lowerLeftCorner, Vector2 upperRightCorner)
+        public void CreateFrameFromWalls(Vector2 lowerLeftCorner, Vector2 upperRightCorner, Vector2 gunPosition)
         {
             GameObject assetWall = _assetProvider.Initializebl(AssetAddressAndNames.Wall);
             Vector2 sizeOfFrame = upperRightCorner - lowerLeftCorner;
@@ -58,18 +61,28 @@ namespace Infrastructure.Services
                 new Vector2(upperRightCorner.x, 0), 
                 new Vector2(1, sizeOfFrame.y));
 
-            GameObject wallForSpawnTheBallsGridPattern = CreateWall(assetWall, 
+            GameObject upperWall = CreateWall(assetWall, 
                 new Vector2(0, upperRightCorner.y), 
                 new Vector2(sizeOfFrame.x, 1));
 
-            wallForSpawnTheBallsGridPattern
-                .GetComponent<BoxCollider2D>()
-                .isTrigger = true;
+            WallForSpawnTheBallsGridPattern(upperWall);
+
+            GameObject triggerForGameOver = CreateWall(assetWall, 
+                new Vector2(0, gunPosition.y), 
+                new Vector2(sizeOfFrame.x, 1));
             
+            TriggerForGameOver(triggerForGameOver);
+        }
+
+        private void WallForSpawnTheBallsGridPattern(GameObject wallForSpawnTheBallsGridPattern) =>
             wallForSpawnTheBallsGridPattern
                 .AddComponent<SpawnTheBallsGridPattern>()
                 .Construct(this);
-        }
+
+        private void TriggerForGameOver(GameObject triggerForGameOver) =>
+            triggerForGameOver
+                .AddComponent<TriggerForGameOver>()
+                .Construct(_uiFactoryService);
 
         private GameObject CreateWall(GameObject assetWall, Vector2 position, Vector2 sizeOfFrame)
         {

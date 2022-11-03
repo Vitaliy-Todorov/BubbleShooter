@@ -3,8 +3,8 @@ using Assets.Scripts.Infrastructure.Services.AssetManagement;
 using Assets.Scripts.Infrastructure.States;
 using Assets.Scripts.Infrastructure.System;
 using Assets.Scripts.Infrastructure.System.InputSystem;
-using Assets.Scripts.UI;
 using Assets.Scripts.UI.Menu;
+using UI.Menu;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure.Services
@@ -55,6 +55,21 @@ namespace Assets.Scripts.Infrastructure.Services
             _windowManagementSystem.GameMenu = gameMenuGO;
             gameMenuGO.SetActive(false);
             return gameMenu;
+        }
+
+        public GameOverMenuGeneral CreateGameOverMenu()
+        {
+            Time.timeScale = 0;
+            
+            GameObject asset = _assetProvider.Initializebl(AssetAddressAndNames.GameOverMenu);
+            GameObject gameOverMenuGeneralGO = Object.Instantiate(asset);
+            GameOverMenuGeneral gameOverMenuGeneral = gameOverMenuGeneralGO.GetComponentInChildren<GameOverMenuGeneral>();
+
+            gameOverMenuGeneral.Construct(_gameStateMachine);
+
+            _windowManagementSystem.GameMenu = gameOverMenuGeneralGO;
+            
+            return gameOverMenuGeneral;
         }
     }
 }

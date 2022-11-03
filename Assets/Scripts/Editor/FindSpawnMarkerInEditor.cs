@@ -34,6 +34,9 @@ namespace Editor
 
         private static void FindTopAndBottomOfGrid(LevelData levelData)
         {
+            if(levelData.StationaryBalls.Count == 0)
+                return;
+            
             levelData.TopOfGrid = levelData.StationaryBalls[0].Position.y;
             levelData.BottomOfGrid = levelData.StationaryBalls[0].Position.y;
 

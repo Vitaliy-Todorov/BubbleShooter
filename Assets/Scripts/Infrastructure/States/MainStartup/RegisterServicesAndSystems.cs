@@ -85,9 +85,10 @@ namespace Assets.Scripts.Infrastructure.States
             WindowManagementSystem windowManagementSystem = _container.GetDependency<WindowManagementSystem>();
             SaveLoadService saveLoadService = _container.GetDependency<SaveLoadService>();
             GeneralDataService generalDataService = _container.GetDependency<GeneralDataService>();
+            UIFactoryService iuFactoryService = _container.GetDependency<UIFactoryService>();
             IInputSystem inputSystem = _container.GetDependency<IInputSystem>();
             
-            return new GameFactoryService(assetProvider, generalDataService, inputSystem);
+            return new GameFactoryService(assetProvider, generalDataService, iuFactoryService, inputSystem);
         }
 
         private WindowManagementSystem WindowManagementSystem()

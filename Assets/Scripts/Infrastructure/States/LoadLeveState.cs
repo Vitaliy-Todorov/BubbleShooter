@@ -73,15 +73,20 @@ namespace Assets.Scripts.Infrastructure.States
             string nameScene = SceneManager.GetActiveScene().name;
             LevelData levelData = _staticDataService.GetLevelData(nameScene);
 
+            if(levelData == null)
+                return;
+            
             BallsGridMove ballsGridMove = 
-                _gameFactoryService.CreateBallsGrid(levelData.StationaryBalls, levelData.TopOfGrid, levelData.BottomOfGrid)
+                _gameFactoryService
+                    .CreateBallsGrid(levelData.StationaryBalls, levelData.TopOfGrid, levelData.BottomOfGrid)
                     .GetComponent<BallsGridMove>();
             
             _gameFactoryService.CreateGun(levelData.Gun, ballsGridMove);
             
             _gameFactoryService.CreateFrameFromWalls(
                 _generalDataService.GeneralData.lowerLeftCorner,
-                _generalDataService.GeneralData.upperRightCorner
+                _generalDataService.GeneralData.upperRightCorner,
+                levelData.Gun
                 );
         }
     }

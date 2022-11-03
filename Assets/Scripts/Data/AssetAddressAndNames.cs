@@ -8,6 +8,7 @@
         public static string Wall = "BallsGrid/Wall";
         public static string MainMenu = "UI/Menu/MainMenu";
         public static string GameMenu = "UI/Menu/GameMenu";
+        public static string GameOverMenu = "UI/Menu/GameOverMenu";
         public static string Gun = "Gun/Gun";
 
 

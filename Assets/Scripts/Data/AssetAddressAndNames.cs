@@ -6,6 +6,7 @@
         public static string BallsGrid = "BallsGrid/BallsGrid";
         public static string BallsGridPattern = "BallsGrid/BallsGridPattern";
         public static string Wall = "BallsGrid/Wall";
+        public static string TriggerWall = "BallsGrid/TriggerWall";
         public static string MainMenu = "UI/Menu/MainMenu";
         public static string GameMenu = "UI/Menu/GameMenu";
         public static string GameOverMenu = "UI/Menu/GameOverMenu";

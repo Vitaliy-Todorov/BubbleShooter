@@ -14,6 +14,8 @@ namespace Infrastructure.Services
         public StaticGeneralData StaticGeneralData;
         private Dictionary<string, LevelData> _levelDatas;
 
+        public Dictionary<string, LevelData> LevelDatas => _levelDatas;
+
         public StaticDataService()
         {
             _levelDatas = 

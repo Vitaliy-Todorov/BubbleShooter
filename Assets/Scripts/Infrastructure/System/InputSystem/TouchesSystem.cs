@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Infrastructure.System.InputSystem
 {
-    public class KeyboardAndMouseInputSystem : IInputSystem
+    public class TouchesSystem : IInputSystem
     {
         private readonly string _vertical = "Vertical";
         private readonly string _horizontal = "Horizontal";

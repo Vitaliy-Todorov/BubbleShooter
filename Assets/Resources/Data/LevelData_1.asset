@@ -12,5 +12,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4964d6470d0d4236a2a88fb7e9a99403, type: 3}
   m_Name: LevelData_1
   m_EditorClassIdentifier: 
-  NameScene: 
-  Gun: {x: 0, y: 0, z: 0}
+  NameScene: TestLevel_1
+  NameLevel: Pattern
+  Gun: {x: 0, y: -3.5, z: 0}
+  _stationaryBalls:
+  - Color: 1
+    Position: {x: -0.5, y: 2.5}
+  - Color: 1
+    Position: {x: 0.5, y: 2.5}
+  - Color: 2
+    Position: {x: -0.5, y: 4.5}
+  - Color: 0
+    Position: {x: 0.5, y: 3.5}
+  - Color: 2
+    Position: {x: 1.5, y: 4.5}
+  - Color: 0
+    Position: {x: 1.5, y: 2.5}
+  - Color: 0
+    Position: {x: -0.5, y: 3.5}
+  - Color: 0
+    Position: {x: -1.5, y: 2.5}
+  - Color: 2
+    Position: {x: 1.5, y: 3.5}
+  - Color: 2
+    Position: {x: -1.5, y: 4.5}
+  - Color: 2
+    Position: {x: 0.5, y: 4.5}
+  - Color: 2
+    Position: {x: -1.5, y: 3.5}
+  Random: 0
+  BottomOfGrid: 2.5
+  TopOfGrid: 4.5
+  Height: 0
+  Width: 0

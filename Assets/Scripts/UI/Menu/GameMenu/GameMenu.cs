@@ -2,8 +2,11 @@ using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Data;
 using Assets.Scripts.Infrastructure.States;
 using Assets.Scripts.Infrastructure.System.InputSystem;
+using Infrastructure.Services;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.UI.Menu
@@ -12,38 +15,29 @@ namespace Assets.Scripts.UI.Menu
     {
         [SerializeField] private TextMeshProUGUI _textGold;
 
-        [SerializeField] private Button _save;
-        [SerializeField] private Button _load;
-
-        [SerializeField] private Button _plusGold;
-
-        [SerializeField] private Button _mainMenu;
+        [SerializeField] private Button _mainMenuButton;
+        [SerializeField] private Button _restartButton;
+        [SerializeField] private Button _levelsButton;
         [SerializeField] private Button _exet;
         
-        [SerializeField] private GameObject _saveMenu;
-        [SerializeField] private GameObject _loadMenu;
+        [SerializeField] private GameObject _levelsMenu;
 
         private GameStateMachine _gameStateMachine;
         private GeneralDataService _generalDataService;
-        private SaveLoadService _saveLoadService;
 
-        public void Construct(GameStateMachine gameStateMachine, 
-            GeneralDataService generalDataService,
-            SaveLoadService saveLoadService)
+        public void Construct(GameStateMachine gameStateMachine, GeneralDataService generalDataService)
         {
             _gameStateMachine = gameStateMachine;
             _generalDataService = generalDataService;
-            _saveLoadService = saveLoadService;
 
             SetTextGold();
         }
 
         void Start()
         {
-            _save.onClick.AddListener(Save);
-            _load.onClick.AddListener(Load);
-            _plusGold.onClick.AddListener(PlusGold);
-            _mainMenu.onClick.AddListener(MainMenu);
+            _mainMenuButton.onClick.AddListener(MainMenu);
+            _restartButton.onClick.AddListener(Restart);
+            _levelsButton.onClick.AddListener(LevelsMenu);
             _exet.onClick.AddListener(Exet);
         }
 
@@ -52,27 +46,20 @@ namespace Assets.Scripts.UI.Menu
             _gameStateMachine.Enter<LoadLeveState, string>(AssetAddressAndNames.MainMenuScene);
         }
 
-        private void Save()
+        private void Restart()
         {
-            _saveMenu.SetActive(true);
-            gameObject.SetActive(false);
+            _gameStateMachine.Enter<LoadLeveState, string>(SceneManager.GetActiveScene().name);
         }
 
-        private void Load()
+        private void LevelsMenu()
         {
-            _loadMenu.SetActive(true);
+            _levelsMenu.SetActive(true);
             gameObject.SetActive(false);
         }
 
         private void Exet()
         {
             Application.Quit();
-        }
-
-        private void PlusGold()
-        {
-            _generalDataService.PlayerProgressData.GoldenCrystal += 1;
-            SetTextGold();
         }
 
         public void SetTextGold()

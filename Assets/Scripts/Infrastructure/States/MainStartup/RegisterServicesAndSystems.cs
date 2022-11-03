@@ -72,11 +72,12 @@ namespace Assets.Scripts.Infrastructure.States
         {
             AssetProvider assetProvider = _container.GetDependency<AssetProvider>();
             WindowManagementSystem windowManagementSystem = _container.GetDependency<WindowManagementSystem>();
+            StaticDataService staticDataService = _container.GetDependency<StaticDataService>();
             SaveLoadService saveLoadService = _container.GetDependency<SaveLoadService>();
             GeneralDataService generalDataService = _container.GetDependency<GeneralDataService>();
             IInputSystem inputSystem = _container.GetDependency<IInputSystem>();
             
-            return new UIFactoryService(_gameStateMachine, assetProvider, windowManagementSystem, saveLoadService, generalDataService, inputSystem);
+            return new UIFactoryService(_gameStateMachine, assetProvider, staticDataService, windowManagementSystem, saveLoadService, generalDataService, inputSystem);
         }
         
         private GameFactoryService GameFactoryService()

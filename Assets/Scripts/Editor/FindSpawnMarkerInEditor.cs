@@ -23,20 +23,20 @@ namespace Editor
                     FindObjectOfType<GunSpawnMarker>()
                     .transform.position;
                 
-                levelData.StationaryBalls = 
+                levelData._stationaryBalls = 
                     FindObjectsOfType<StationaryBallSpawnMarker>()
                         .Select(spawnMarker => new BallSpawnerData(spawnMarker.Color, spawnMarker.transform.position))
                         .ToList();
 
-                FindTopAndBottomOfGrid(levelData);
+                if(levelData._stationaryBalls.Count != 0)
+                    FindTopAndBottomOfGrid(levelData);
+                
+                EditorUtility.SetDirty(target);
             }
         }
 
-        private static void FindTopAndBottomOfGrid(LevelData levelData)
+        private void FindTopAndBottomOfGrid(LevelData levelData)
         {
-            if(levelData.StationaryBalls.Count == 0)
-                return;
-            
             levelData.TopOfGrid = levelData.StationaryBalls[0].Position.y;
             levelData.BottomOfGrid = levelData.StationaryBalls[0].Position.y;
 

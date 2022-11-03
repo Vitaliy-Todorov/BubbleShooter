@@ -1,23 +1,22 @@
 using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Infrastructure.States;
+using Infrastructure.Services;
+using UI.Menu;
+using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Assets.Scripts.UI.Menu
 {
     public class MainMenuGeneral : MonoBehaviour
     {
         [SerializeField] 
-        private MainMenu _mainMenu;
-        
-        [SerializeField] 
-        private LoadMenu _loadMenu;
+        private LevelMenu _LevelMenu;
 
 
-        public void Construct(GameStateMachine gameStateMachine, GeneralDataService generalDataService, SaveLoadService saveLoadService)
+        public void Construct(GameStateMachine gameStateMachine, StaticDataService staticDataService)
         {
-            _mainMenu.Construct(gameStateMachine, saveLoadService);
-            
-            _loadMenu.Construct(generalDataService, saveLoadService);
+            _LevelMenu.Construct(gameStateMachine, staticDataService);
         }
     }
 }

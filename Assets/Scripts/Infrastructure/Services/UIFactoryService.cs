@@ -4,6 +4,7 @@ using Assets.Scripts.Infrastructure.States;
 using Assets.Scripts.Infrastructure.System;
 using Assets.Scripts.Infrastructure.System.InputSystem;
 using Assets.Scripts.UI.Menu;
+using Infrastructure.Services;
 using UI.Menu;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ namespace Assets.Scripts.Infrastructure.Services
     {
         private GameStateMachine _gameStateMachine;
         private AssetProvider _assetProvider;
+        private StaticDataService _staticDataService;
         private WindowManagementSystem _windowManagementSystem;
         private SaveLoadService _saveLoadService;
         private GeneralDataService _generalDataService;
@@ -20,6 +22,7 @@ namespace Assets.Scripts.Infrastructure.Services
 
         public UIFactoryService(GameStateMachine gameStateMachine,
             AssetProvider assetProvider,
+            StaticDataService staticDataService,
             WindowManagementSystem windowManagementSystem,
             SaveLoadService saveLoadService,
             GeneralDataService generalDataService,
@@ -27,6 +30,7 @@ namespace Assets.Scripts.Infrastructure.Services
         {
             _gameStateMachine = gameStateMachine;
             _assetProvider = assetProvider;
+            _staticDataService = staticDataService;
             _windowManagementSystem = windowManagementSystem;
             _saveLoadService = saveLoadService;
             _generalDataService = generalDataService;
@@ -39,7 +43,7 @@ namespace Assets.Scripts.Infrastructure.Services
             GameObject mainMenuGO = Object.Instantiate(asset);
             MainMenuGeneral mainMenu = mainMenuGO.GetComponentInChildren<MainMenuGeneral>();
             
-            mainMenu.Construct(_gameStateMachine, _generalDataService, _saveLoadService);
+            mainMenu.Construct(_gameStateMachine, _staticDataService);
             
             return mainMenu;
         }
@@ -50,10 +54,10 @@ namespace Assets.Scripts.Infrastructure.Services
             GameObject gameMenuGO = Object.Instantiate(asset);
             GameMenuGeneral gameMenu = gameMenuGO.GetComponentInChildren<GameMenuGeneral>();
 
-            gameMenu.Construct(_gameStateMachine, _generalDataService, _saveLoadService);
+            gameMenu.Construct(_gameStateMachine, _generalDataService, _staticDataService, _inputSystem);
 
             _windowManagementSystem.GameMenu = gameMenuGO;
-            gameMenuGO.SetActive(false);
+            // gameMenuGO.SetActive(false);
             return gameMenu;
         }
 

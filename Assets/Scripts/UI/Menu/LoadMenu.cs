@@ -1,12 +1,10 @@
-using System;
 using Assets.Scripts.Data;
 using Assets.Scripts.Infrastructure.Services;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.UI.Menu
+namespace UI.Menu
 {
     public class LoadMenu : MonoBehaviour
     {

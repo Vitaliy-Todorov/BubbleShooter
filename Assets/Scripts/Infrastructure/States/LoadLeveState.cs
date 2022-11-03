@@ -39,10 +39,11 @@ namespace Assets.Scripts.Infrastructure.States
 
         public void Enter(string sceneName)
         {
-            if(SceneManager.GetActiveScene().name != sceneName)
+            _sceneLoad.Load(sceneName, OnLoader);
+            /*if(SceneManager.GetActiveScene().name != sceneName)
                 _sceneLoad.Load(sceneName, OnLoader);
             else
-                OnLoader();
+                OnLoader();*/
         }
 
         public void Exit() { }
@@ -75,11 +76,10 @@ namespace Assets.Scripts.Infrastructure.States
 
             if(levelData == null)
                 return;
-            
-            BallsGridMove ballsGridMove = 
-                _gameFactoryService
-                    .CreateBallsGrid(levelData.StationaryBalls, levelData.TopOfGrid, levelData.BottomOfGrid)
-                    .GetComponent<BallsGridMove>();
+
+            BallsGridMove ballsGridMove = _gameFactoryService
+                .CreateBallsGrid(levelData)
+                .GetComponent<BallsGridMove>();
             
             _gameFactoryService.CreateGun(levelData.Gun, ballsGridMove);
             

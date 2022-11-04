@@ -35,16 +35,26 @@ namespace Data
         private List<BallSpawnerData> CreatBallsGrid()
         {
             _stationaryBalls = new List<BallSpawnerData>();
-            
+
+            MiddleOfWidth(out float widdleOfWidth);
+
             for (int x = 0; x < Width; x++)
             for (int y = 0; y < Height; y++)
             {
-                BallSpawnerData ball = new BallSpawnerData(0, new Vector2(x - Width/2, y));
+                BallSpawnerData ball = new BallSpawnerData(0, new Vector2(x - widdleOfWidth, y));
                 
                 _stationaryBalls.Add(ball);
             }
             
             return _stationaryBalls;
+        }
+
+        private void MiddleOfWidth(out float widdleOfWidth)
+        {
+            if (Width % 2 == 0)
+                widdleOfWidth = (float) Width / 2 - .5f;
+            else
+                widdleOfWidth = (float) Width / 2;
         }
     }
 }

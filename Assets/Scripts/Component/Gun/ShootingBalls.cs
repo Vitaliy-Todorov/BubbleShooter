@@ -37,7 +37,7 @@ namespace Component
 
         private void Update()
         {
-            if (_inputSystem.Click.Up && Time.timeScale != 0)
+            if (_inputSystem.Click.Up && Time.timeScale != 0) 
                 Shoot(_gan, _speedBall, _ball);
         }
 

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using NotImplementedException = System.NotImplementedException;
 
 namespace Assets.Scripts.Infrastructure.System.InputSystem
 {
@@ -8,8 +9,9 @@ namespace Assets.Scripts.Infrastructure.System.InputSystem
         private readonly string _horizontal = "Horizontal";
 
         private Click _click = new Click();
-        
-        public bool Blockieren { get; set; }
+
+        private bool _blockieren;
+        private bool _upAfterBlocking = true;
         public Click Click { get => _click; }
 
         public Vector3 Axis
@@ -32,32 +34,68 @@ namespace Assets.Scripts.Infrastructure.System.InputSystem
 
         public void Update()
         {
-            if (Blockieren)
+            if (_blockieren)
+            {
+                _upAfterBlocking = false;
                 return;
+            }
+            if (UpAfterBlocking())
+            {
+                _upAfterBlocking = true;
+                return;
+            }
+
+            if (_upAfterBlocking)
+                RefreshByClicking();
+        }
+
+        public void Block() => 
+            _blockieren = true;
+
+        public void UnlockAfterUp() => 
+            _blockieren = false;
+
+        public void InstantlyUnlock()
+        {
+            _blockieren = false;
+            _upAfterBlocking = true;
+        }
+
+        private bool UpAfterBlocking() => 
+            Input.GetMouseButtonUp(0) && !_upAfterBlocking;
+
+        private void RefreshByClicking()
+        {
+            Click.Down = false;
+            Click.Up = false;
+            Click.Active = false;
             
             if (Input.GetMouseButtonDown(0))
             {
-                Click.Up = true;
+                Click.Down = true;
                 Click.StartPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             }
 
             if (Input.GetMouseButton(0))
             {
-                Click.Up = false;
+                Click.Down = false;
                 Click.Active = true;
+                Click.Up = false;
+                Click.EndPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                Click.Down = false;
+                Click.Active = false;
+                Click.Up = true;
                 Click.EndPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             }
             else
             {
                 Click.Up = false;
                 Click.Active = false;
-            }
-
-
-            if (Input.GetMouseButtonUp(0))
-            {
-                Click.Up = true;
-                Click.EndPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Click.Down = false;
             }
         }
     }

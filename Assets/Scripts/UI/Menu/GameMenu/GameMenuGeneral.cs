@@ -34,12 +34,11 @@ namespace UI.Menu
             _levelMenu.Construct(gameStateMachine, staticDataService);
             _mainMenuButton.Construct(this);
         }
-
-        private void LateUpdate()
+        
+        private void OnDestroy()
         {
-            if (timeDelayAfterDisablingMenu > 50)
-                _inputSystem.Blockieren = _activeMenu;
-            timeDelayAfterDisablingMenu++;
+            _inputSystem.InstantlyUnlock();
+            Time.timeScale = 1;
         }
 
         public void EnableAndDisableMenu()
@@ -49,20 +48,20 @@ namespace UI.Menu
             else
                 EnableMenu();
         }
-        
-        public void EnableMenu()
+
+        private void EnableMenu()
         {
-            _inputSystem.Blockieren = true;
+            _inputSystem.Block();
             _activeMenu = true;
             Time.timeScale = 0;
             _gameMenu.gameObject.SetActive(true);
             _background.SetActive(true);
         }
 
-        public void DisableMenu()
+        private void DisableMenu()
         {
             timeDelayAfterDisablingMenu = 0;
-            //_inputSystem.Blockieren = false;
+            _inputSystem.UnlockAfterUp();
             _activeMenu = false;
             _gameMenu.gameObject.SetActive(false);
             _background.SetActive(false);

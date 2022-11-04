@@ -8,8 +8,9 @@ namespace Assets.Scripts.Infrastructure.System.InputSystem
         private readonly string _horizontal = "Horizontal";
 
         private Click _click = new Click();
-        
-        public bool Blockieren { get; set; }
+
+        private bool _blockieren;
+        private bool _upAfterBlocking = true;
         public Click Click { get => _click; }
 
         public Vector3 Axis
@@ -32,34 +33,69 @@ namespace Assets.Scripts.Infrastructure.System.InputSystem
 
         public void Update()
         {
-            if (Blockieren)
+            if (_blockieren)
+            {
+                _upAfterBlocking = false;
                 return;
+            }
+            if (UpAfterBlocking())
+            {
+                _upAfterBlocking = true;
+                return;
+            }
             
-            if (!(Input.touchCount > 0))
-                return;
+            Click.Up = false;
+            Click.Active = false;
+            Click.Down = false;
+            
+            if (Input.touchCount > 0)
+                RefreshByClicking();
+        }
 
+        public void Block() => 
+            _blockieren = true;
+
+        public void UnlockAfterUp() => 
+            _blockieren = false;
+
+        public void InstantlyUnlock()
+        {
+            _blockieren = false;
+            _upAfterBlocking = true;
+        }
+
+        private bool UpAfterBlocking() => 
+            Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended && !_upAfterBlocking;
+
+        private void RefreshByClicking()
+        {
             Touch touch = Input.GetTouch(0);
+
             switch (touch.phase)
             {
                 case TouchPhase.Began:
-                    Click.Up = true;
+                    Click.Down = true;
                     Click.StartPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     break;
 
                 case TouchPhase.Moved:
-                    Click.Up = false;
+                    Click.Down = false;
                     Click.Active = true;
+                    Click.Up = false;
                     Click.EndPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     break;
 
                 case TouchPhase.Ended:
+                    Click.Down = false;
+                    Click.Active = false;
                     Click.Up = true;
                     Click.EndPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     break;
-                
-                default: 
+
+                default:
                     Click.Up = false;
                     Click.Active = false;
+                    Click.Down = false;
                     break;
             }
         }

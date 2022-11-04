@@ -4,8 +4,6 @@ namespace Assets.Scripts.Infrastructure.System.InputSystem
 {
     public interface IInputSystem
     {
-        public bool Blockieren { get; set; }
-        
         public Click Click { get; }
 
         public Vector3 Axis { get; }
@@ -15,5 +13,8 @@ namespace Assets.Scripts.Infrastructure.System.InputSystem
         public  bool ESC { get; }
 
         void Update();
+        public void Block();
+        public void UnlockAfterUp();
+        public void InstantlyUnlock();
     }
 }

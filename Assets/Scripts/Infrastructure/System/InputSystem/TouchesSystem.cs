@@ -35,29 +35,32 @@ namespace Assets.Scripts.Infrastructure.System.InputSystem
             if (Blockieren)
                 return;
             
-            if (Input.GetMouseButtonDown(0))
-            {
-                Click.Up = true;
-                Click.StartPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            }
+            if (!(Input.touchCount > 0))
+                return;
 
-            if (Input.GetMouseButton(0))
+            Touch touch = Input.GetTouch(0);
+            switch (touch.phase)
             {
-                Click.Up = false;
-                Click.Active = true;
-                Click.EndPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            }
-            else
-            {
-                Click.Up = false;
-                Click.Active = false;
-            }
+                case TouchPhase.Began:
+                    Click.Up = true;
+                    Click.StartPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    break;
 
+                case TouchPhase.Moved:
+                    Click.Up = false;
+                    Click.Active = true;
+                    Click.EndPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    break;
 
-            if (Input.GetMouseButtonUp(0))
-            {
-                Click.Up = true;
-                Click.EndPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                case TouchPhase.Ended:
+                    Click.Up = true;
+                    Click.EndPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    break;
+                
+                default: 
+                    Click.Up = false;
+                    Click.Active = false;
+                    break;
             }
         }
     }

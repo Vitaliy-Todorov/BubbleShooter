@@ -8,15 +8,11 @@ namespace UI.Menu
 {
     public class CallingMainMenu : Button
     {
-        private IInputSystem _inputSystem;
         private GameMenuGeneral _gameMenuGeneral;
 
-        public void Construct(IInputSystem inputSystem, GameMenuGeneral gameMenuGeneral)
-        {
-            _inputSystem = inputSystem;
+        public void Construct(GameMenuGeneral gameMenuGeneral) => 
             _gameMenuGeneral = gameMenuGeneral;
-        }
-        
+
         public override void OnPointerDown(PointerEventData eventData)
         {
             base.OnPointerDown(eventData);

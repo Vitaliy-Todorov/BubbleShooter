@@ -1,10 +1,7 @@
-using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Infrastructure.States;
 using Infrastructure.Services;
 using UI.Menu;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Assets.Scripts.UI.Menu
 {

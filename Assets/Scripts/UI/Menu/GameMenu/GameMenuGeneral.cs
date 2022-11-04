@@ -32,13 +32,7 @@ namespace UI.Menu
             _gameMenu.Construct(gameStateMachine, generalDataService);
             
             _levelMenu.Construct(gameStateMachine, staticDataService);
-            _mainMenuButton.Construct(inputSystem, this);
-        }
-
-        void Start()
-        {
-            // _mainMenuButton.onClick.AddListener(EnableAndDisableMenu);
-            //_mainMenuButton.onClick.AddListener(EnableAndDisableMenu);
+            _mainMenuButton.Construct(this);
         }
 
         private void LateUpdate()

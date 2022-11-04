@@ -880,6 +880,7 @@ MonoBehaviour:
   _levelMenu: {fileID: 1314168513903665358}
   _background: {fileID: 3046145150818075116}
   _mainMenuButton: {fileID: 4879849403180282401}
+  _activeMenu: 0
 --- !u!1 &3489796403424066736
 GameObject:
   m_ObjectHideFlags: 0
@@ -1847,7 +1848,7 @@ RectTransform:
   m_GameObject: {fileID: 8725368817675996861}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_LocalScale: {x: 6, y: 6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6110808313350167927}
@@ -1987,6 +1988,14 @@ PrefabInstance:
     - target: {fileID: 4496825115710364152, guid: a5c3b23682867514287b87ff512ab9c3, type: 3}
       propertyPath: m_SizeDelta.y
       value: 434.7532
+      objectReference: {fileID: 0}
+    - target: {fileID: 4496825115710364152, guid: a5c3b23682867514287b87ff512ab9c3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4496825115710364152, guid: a5c3b23682867514287b87ff512ab9c3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 4496825115710364152, guid: a5c3b23682867514287b87ff512ab9c3, type: 3}
       propertyPath: m_LocalPosition.x

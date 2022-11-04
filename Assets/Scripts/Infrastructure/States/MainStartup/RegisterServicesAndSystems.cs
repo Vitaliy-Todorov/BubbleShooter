@@ -42,7 +42,7 @@ namespace Assets.Scripts.Infrastructure.States
 
         private void Registration()
         {
-#if UNITY_ANRDOID
+#if UNITY_ANDROID
             _container.RegisterDependency<IInputSystem>(new TouchesSystem());
 #elif UNITY_STANDALONE_WIN
             _container.RegisterDependency<IInputSystem>(new KeyboardAndMouseInputSystem());
@@ -50,10 +50,10 @@ namespace Assets.Scripts.Infrastructure.States
             _container.RegisterDependency<IInputSystem>(new KeyboardAndMouseInputSystem());
 #endif
             
-            if (Application.platform == RuntimePlatform.WindowsPlayer)
+            /*if (Application.platform == RuntimePlatform.WindowsPlayer)
                 _container.RegisterDependency<IInputSystem>(new KeyboardAndMouseInputSystem());
             else if(Application.platform == RuntimePlatform.Android)
-                _container.RegisterDependency<IInputSystem>(new TouchesSystem());
+                _container.RegisterDependency<IInputSystem>(new TouchesSystem());*/
             
             _container.RegisterDependency(new StaticDataService());
             _container.RegisterDependency(GeneralDataService());

@@ -21,7 +21,6 @@ namespace UI.Menu
         
         public bool _activeMenu;
         private IInputSystem _inputSystem;
-        private int timeDelayAfterDisablingMenu;
 
         public void Construct(GameStateMachine gameStateMachine,
             GeneralDataService generalDataService,
@@ -60,7 +59,6 @@ namespace UI.Menu
 
         private void DisableMenu()
         {
-            timeDelayAfterDisablingMenu = 0;
             _inputSystem.UnlockAfterUp();
             _activeMenu = false;
             _gameMenu.gameObject.SetActive(false);
